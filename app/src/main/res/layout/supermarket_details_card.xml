@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/card_margin"
+
+       >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/cardFooter"
+            >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Conad "
+                android:paddingTop="@dimen/album_title_padding"
+                android:paddingLeft="5dp"
+                android:textColor="@color/album_title"
+                android:textSize="@dimen/album_title"
+                android:layout_alignParentTop="true"
+
+                />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8:30 -12:30  3:00-8:30"
+                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                android:paddingLeft="@dimen/album_title_padding"
+                android:paddingRight="@dimen/album_title_padding"
+                android:textSize="@dimen/songs_count"
+
+                android:layout_below="@+id/title"
+                android:layout_toRightOf="@+id/count"
+                />
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

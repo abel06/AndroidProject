@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="cheese">
+        <item id="01">
+        </item>
+        <item image="">label</item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name="variouse_groceries">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name="fresh_fruits">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name="meat">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name= "snack" >
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name="medicine">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name="refrigerated_items">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+    </string-array>
+    <string-array name="canned_foods">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name="seafood">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name= "themed_meals">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name=  "kitchen">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name=  "frozen">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name= "spiece_herbs" >
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name="baby_stuff">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+    <string-array name="pets">
+        <item id=""></item>
+        <item image=""></item>
+        <item name=""></item>
+        <item label=""></item>
+        <item size=""></item>
+        <item brand=""></item>
+        <item madein=""></item>
+        <item distance=""></item>
+        <item owner=""></item>
+        <item lat=""></item>
+        <item lng=""></item>
+    </string-array>
+
+
+</resources>
