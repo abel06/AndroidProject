@@ -2,6 +2,7 @@ package com.example.abela.marketspiral;
 
 import android.os.AsyncTask;
 
+import com.example.abela.marketspiral.Utility.Functions;
 import com.example.abela.marketspiral.interfaces.LoginResponse;
 
 import java.io.BufferedReader;
@@ -55,11 +56,11 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
 
             OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
 
-            HashMap<String,String> user_data = hashMaps[0]; //Collect data from input
+//            HashMap<String,String> user_data = hashMaps[0]; //Collect data from input
+//
+//            String data = "username="+user_data.get("username")+"&password="+user_data.get("password"); // Concatenate data into a request
 
-            String data = "username="+user_data.get("username")+"&password="+user_data.get("password"); // Concatenate data into a request
-
-            wr.write(data);
+            wr.write(Functions.ConcatenateForServer(hashMaps[0]));
             wr.flush();
 
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
