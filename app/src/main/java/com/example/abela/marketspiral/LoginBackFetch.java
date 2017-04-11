@@ -45,7 +45,7 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
         URL url = null;
         try {
             //Login php script location
-            url = new URL("http://localhost/login.php");
+            url = new URL("http://10.0.2.2/login.php");
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");      //Data sent via POST method
@@ -57,7 +57,7 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
 
             HashMap<String,String> user_data = hashMaps[0]; //Collect data from input
 
-            String data = "username="+user_data.get("username")+"&password"+user_data.get("password"); // Concatenate data into a request
+            String data = "username="+user_data.get("username")+"&password="+user_data.get("password"); // Concatenate data into a request
 
             wr.write(data);
             wr.flush();
@@ -71,7 +71,6 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
             }
             response = sb.toString();
 
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
@@ -79,15 +78,11 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                reader.close();
-                inputStream.close();
-                connection.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            //                reader.close();
+//                inputStream.close();
+            connection.disconnect();
         }
+
         return "" + response;
 
     }
