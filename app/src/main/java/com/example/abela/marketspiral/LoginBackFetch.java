@@ -22,10 +22,12 @@ import java.util.HashMap;
  */
 
 public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, String> {
-    private LoginResponse delegate;
 
-    public LoginBackFetch() {
-        delegate = null;
+    //Used to notify the Login activity after it finish
+    private Login delegate;
+
+    public LoginBackFetch(Login delegate) {
+        this.delegate= delegate;
     }
 
     @Override
@@ -33,41 +35,36 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
 
 
         HttpURLConnection connection = null;
-        BufferedWriter writer = null;
         BufferedReader reader = null;
         String response ="";
-        String SEARCH_URL = "http://localhost/login.php";
         // String Search="https://api.data.gov/nrel/alt-fuel-stations/v1/nearest.json?api_key=5cwCk6nhFAkPu9BU3EyxafUN5jqytIGvGD6R4kcO&location=Denver+CO";
-        OutputStream outputStream;
         InputStream inputStream = null;
         //--------------------------------------------------------------------
 
         //-----------------------------------------------------------------------------------------------
         URL url = null;
         try {
-            url = new URL(SEARCH_URL);
-
+            //Login php script location
+            url = new URL("http://localhost/login.php");
 
             connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("POST");
-
+            connection.setRequestMethod("POST");      //Data sent via POST method
 
             connection.setDoOutput(true);
-//            connection.setDoInput(true);
             connection.setConnectTimeout(10000);
 
             OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
 
-            String data = "&username=marco&password=marco";
+            HashMap<String,String> user_data = hashMaps[0]; //Collect data from input
+
+            String data = "username="+user_data.get("username")+"&password"+user_data.get("password"); // Concatenate data into a request
 
             wr.write(data);
             wr.flush();
 
-
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder sb = new StringBuilder();
-            String line = null;
+            String line;
 
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
@@ -91,8 +88,6 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
             }
 
         }
-
-
         return "" + response;
 
     }
