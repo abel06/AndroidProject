@@ -106,12 +106,10 @@ HashMap<Integer,List<Item>> itemsHashmap;
         // bundle.putSerializable("itemlist", (Serializable) itemList);
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.containerFrame, itemsFragment,"itemsfragment");
-//replace(itemsFragment);
+
           transaction.addToBackStack("current");
-        transaction.commit();
-       // replace(itemsFragment);
-      //  BackFetch backFetch =new BackFetch(getApplicationContext());
-      // // backFetch.execute();
+         transaction.commit();
+
 //-----------------------------------------------------------------------------
         PlayServiceCheck playServiceCheck = new PlayServiceCheck(getApplicationContext());
         if (playServiceCheck.isPlayServiceOk()) {
@@ -269,39 +267,24 @@ HashMap<Integer,List<Item>> itemsHashmap;
 
         if (loc != null) {
             mLastLocation = loc;
-            //  Toast.makeText(getApplicationContext(), "get from google" + loc, Toast.LENGTH_SHORT).show();    //first try from google
-            // initiateConnection(getApplicationContext());
         } else {
             loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //if google null try from gps provider
             writeLocation(loc);
             if (loc != null) {
                 mLastLocation = loc;
-
-                //  initiateConnection(getApplicationContext());
-                // Toast.makeText(getApplicationContext(), "get from gps" + loc, Toast.LENGTH_SHORT).show();
             } else {
                 loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);// else try from net provider last location for search
                 writeLocation(loc);
                 if (loc != null) {
                     mLastLocation = loc;
-                    // initiateConnection(getApplicationContext());
-                    // Toast.makeText(getApplicationContext(), "net" + loc, Toast.LENGTH_SHORT).show();
                 } else {
                     loc = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);// else try from passive
                     writeLocation(loc);
                     if (loc != null) {
                         mLastLocation = loc;
-
-                        //   initiateConnection(getApplicationContext());
-                        // Toast.makeText(getApplicationContext(), "get from passive" + loc, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
-
-            //  Toast.makeText(getApplicationContext(), "cant get" + loc, Toast.LENGTH_SHORT).show();
-            // respond("NO_LOCATION");
-
-
         }
     }
     private void writeLocation(Location loc) {

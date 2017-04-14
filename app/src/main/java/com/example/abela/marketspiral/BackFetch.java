@@ -97,10 +97,10 @@ class  BackFetch extends AsyncTask<ArrayList<String>,Void,String> {
     @Override
     protected void onPostExecute(String result) {
 
-        TextWriteRead textWriteRead =new TextWriteRead();
+       TextWriteRead textWriteRead =new TextWriteRead();
        textWriteRead.writeToFile(result,mContext,"result");
 
-       // Log.d("ab","homes  "+result);
+
         HashMap<Integer,List<Item>> itemsHashmap= new HashMap<>();
         List<HashMap<Integer,List<Item>>>hashMaps =new ArrayList<>();
 
@@ -134,17 +134,19 @@ class  BackFetch extends AsyncTask<ArrayList<String>,Void,String> {
                     String date = (String) homeJobj.get("added");
 
 
-                    List<Item> itemList = new ArrayList<Item>();
+                 List<Item> itemList = new ArrayList<Item>();
                     ItemsInBound itemsInBound = new ItemsInBound();
 
-                    String current=textWriteRead.readFromFile(mContext, "mlastLocation.txt");
-                    String[] separeted=current.split(":");
+                   String current=textWriteRead.readFromFile(mContext, "mlastLocation.txt");
+                    if(!current.isEmpty()) {
+                        Log.d("ab","current "+current);
+                         String[] separeted=current.split(":");
 
-                    latCurrent=Double.parseDouble(separeted[0]);
-                    lngCurrent=Double.parseDouble(separeted[1]);
+                        latCurrent=Double.parseDouble(separeted[0]);
+                         lngCurrent=Double.parseDouble(separeted[1]);
 
-               if(itemsInBound.inBound(lat,lng,latCurrent,lngCurrent)){
-                   float[] results=new float[1];
+                   if(itemsInBound.inBound(lat,lng,latCurrent,lngCurrent)){
+                float[] results=new float[1];
                    Location.distanceBetween(lat,lng,latCurrent,lngCurrent,results);
                    DecimalFormat numberFormat = new DecimalFormat("#.0");
                    double distance= Double.parseDouble(numberFormat.format(results[0]/1000));
@@ -159,9 +161,11 @@ class  BackFetch extends AsyncTask<ArrayList<String>,Void,String> {
                     item.setDate(date);
 
                     itemList.add(item);
-                    itemsHashmap.put(i, itemList);
+
                     }
-                    JSONObject ownerJobj = (JSONObject) homeJobj.get("owner");
+                        itemsHashmap.put(i, itemList);
+                    }
+                  JSONObject ownerJobj = (JSONObject) homeJobj.get("owner");
                     String name = ownerJobj.getString("name");
                     String phone = ownerJobj.getString("phone");
                     String email = ownerJobj.getString("email");
@@ -177,37 +181,7 @@ class  BackFetch extends AsyncTask<ArrayList<String>,Void,String> {
                 Log.d("ab","homes  "+j);
             }
         }
-               // for (int i=0;i<homes.length();i++) {}
-                    /*productsJobj = new JSONObject(homes.get(i).toString());
 
-                    JSONArray products = productsJobj.getJSONArray("product");
-
-                    List<Item>itemList=new ArrayList<Item>();
-                    for(int j=0;j<products.length();j++){
-                    productJobj = new JSONObject(products.get(j).toString());
-                    String label = (String) productJobj.get("label");
-                    String image = (String) productJobj.get("image");
-
-                    Item item = new Item(label, 0, image);
-                        itemList.add(item);
-                        //items.add(item);
-
-                       */
-
-
-                   // itemsHashmap.put(i,itemList);
-                   // hashMaps.add(itemsHashmap);
-                /*}
-                dataloader.dataload(itemsHashmap);
-              //  Log.d("ab","cat   "+item);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-       // dataloader.dataload(result);
-       // Log.d("ab","result   "+result);
-        // Toast.makeText(mContext, "post"+result, Toast.LENGTH_SHORT).show();
     } catch (JSONException e) {
             e.printStackTrace();
         }

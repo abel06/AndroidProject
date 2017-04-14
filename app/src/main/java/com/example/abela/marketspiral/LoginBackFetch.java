@@ -1,6 +1,7 @@
 package com.example.abela.marketspiral;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.abela.marketspiral.Utility.Functions;
 import com.example.abela.marketspiral.interfaces.LoginResponse;
@@ -46,7 +47,7 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
         URL url = null;
         try {
             //Login php script location
-            url = new URL("http://10.0.2.2/login.php");
+            url = new URL("http://192.168.43.137/db/login.php");
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");      //Data sent via POST method
@@ -90,6 +91,7 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
 
     @Override
     protected void onPostExecute(String result) {
+        Log.d("ab"," result  "+result);
         delegate.loginFinished(result);
     }
 }

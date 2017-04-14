@@ -53,6 +53,7 @@ public class ItemsFragment extends Fragment {
 
 
         }
+
         mlist=getResources().getStringArray(R.array.cheese);
          mContext=MainActivity.context;
     }
