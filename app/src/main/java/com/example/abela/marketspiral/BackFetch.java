@@ -79,7 +79,6 @@ class  BackFetch extends AsyncTask<ArrayList<String>,Void,String> {
             return "connFailed"+e;
         }
 
-
         //return null;
     }
 
