@@ -24,7 +24,7 @@ public class Login extends AppCompatActivity implements LoginResponse{
 
 
     /***
-     * for better coding manners i moved the entire login on the activity, once the signup button or the login button are pressed the corrisponding method is called
+     * for better coding manners i moved the entire login on the activity, once the signup button or the login button are pressed the corresponding method is called
     **/
     @Override
     protected void onStart() {
@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity implements LoginResponse{
         ((Button)login_fragment.getSign_up_button()).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                swap_to_register();
+                swapToRegister();
             }
         });
     }
@@ -69,7 +69,7 @@ public class Login extends AppCompatActivity implements LoginResponse{
 
 
     /**Thid method swaps between login frame to register frame*/
-    public void swap_to_register() {
+    public void swapToRegister() {
         register_fragment = new RegisterFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,register_fragment).commit();
 
