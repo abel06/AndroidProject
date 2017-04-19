@@ -8,42 +8,7 @@
     <group android:checkableBehavior="single">
         <item android:title="@string/nav_categories">
             <menu>
-                <item
-                    android:id="@+id/nav_beverages"
-                    android:title="@string/nav_beverages" />
-                <item
-                    android:id="@+id/nav_bread_bakery"
-                    android:title="@string/nav_bread_bakery" />
-                <item
-                    android:id="@+id/nav_canned_jarred"
-                    android:title="@string/nav_canned_jarred" />
-                <item
-                    android:id="@+id/nav_cleaners"
-                    android:title="@string/nav_cleaners" />
-                <item
-                    android:id="@+id/nav_dairy"
-                    android:title="@string/nav_dairy" />
-                <item
-                    android:id="@+id/nav_baking"
-                    android:title="@string/nav_baking" />
-                <item
-                    android:id="@+id/nav_frozen"
-                    android:title="@string/nav_frozen" />
-                <item
-                    android:id="@+id/nav_meat"
-                    android:title="@string/nav_meat" />
-                <item
-                    android:id="@+id/nav_Produce"
-                    android:title="@string/nav_produce" />
-                <item
-                    android:id="@+id/nav_paper"
-                    android:title="@string/nav_paper" />
-                <item
-                    android:id="@+id/nav_personal_care"
-                    android:title="@string/nav_personal_care" />
-                <item
-                    android:id="@+id/nav_other"
-                    android:title="@string/nav_other" />
+
             </menu>
         </item>
 

@@ -33,4 +33,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+
+
+    <string name="loc_dialog_title">Use Location?</string>
+    <string name="loc_dialog_message">wants to change your device settings:
+                             inorder to provide offers around your location,location setting must be enabled</string>
+    <string name="loc_dialog_positive_btn">Open Location Settings</string>
+    <string name="loc_retrive_failed">Location retrive failed</string>
 </resources>

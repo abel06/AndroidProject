@@ -2,10 +2,14 @@ package com.example.abela.marketspiral;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Rect;
+
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import android.location.Location;
@@ -21,12 +25,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -37,6 +44,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
@@ -56,20 +64,28 @@ import java.util.HashMap;
 import java.util.List;
 
 import java.util.List;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,Communicator,Dataloader,GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener ,
-      com.google.android.gms.location.LocationListener,  LocationListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Communicator, Dataloader, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        com.google.android.gms.location.LocationListener, LocationListener {
 
     public static GoogleApiClient mGoogleApiClient;
     public static Location mLastLocation;
     public static Context context;
-   public static SharedPreferences sharedPreferences;
-//-------------------------------------------------------
-HashMap<Integer,List<Item>> itemsHashmap;
-   FragmentManager mFragmentManager;
-  android.support.v4.app.FragmentTransaction mFragmentTransaction;
- //---------------------------------------------------
+    public static SharedPreferences sharedPreferences;
+    //-------------------------------------------------------
+    HashMap<Integer, List<Item>> itemsHashmap;
+    FragmentManager mFragmentManager;
+    android.support.v4.app.FragmentTransaction mFragmentTransaction;
+
+    private LocationRequest mLocationRequest;
+
+    private long UPDATE_INTERVAL = 0;  /* 10 secs */
+    private long FASTEST_INTERVAL = 0;
+    LocationManager locationManager;
+
+    //---------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,9 +97,9 @@ HashMap<Integer,List<Item>> itemsHashmap;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                       // .setAction("Action", null).show();
-                replace(new SupermarketsFragment());
+                //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                // .setAction("Action", null).show();
+                // replace(new SupermarketsFragment());
             }
         });
 
@@ -96,19 +112,19 @@ HashMap<Integer,List<Item>> itemsHashmap;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-         BackFetch backFetch =new BackFetch(this);
-         backFetch.execute();
 
+        locControl();
+        //backFetch();
 
-        ItemsFragment itemsFragment =new ItemsFragment();
+        ItemsFragment itemsFragment = new ItemsFragment();
 
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         // bundle.putSerializable("itemlist", (Serializable) itemList);
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.containerFrame, itemsFragment,"itemsfragment");
+        transaction.replace(R.id.containerFrame, itemsFragment, "itemsfragment");
 
-          transaction.addToBackStack("current");
-         transaction.commit();
+        transaction.addToBackStack("current");
+        transaction.commit();
 
 //-----------------------------------------------------------------------------
         PlayServiceCheck playServiceCheck = new PlayServiceCheck(getApplicationContext());
@@ -118,14 +134,54 @@ HashMap<Integer,List<Item>> itemsHashmap;
             mGoogleApiClient.connect();
 
         }
-    context=getApplicationContext();
+        context = getApplicationContext();
 
 
 //-----------------------------------------------------------------------------
     }
 
 
+    @Override
+    protected void onResumeFragments() {
+        if(itemsHashmap==null){
+         backFetch();
+        }
+        super.onResumeFragments();
+    }
 
+    public void backFetch(){
+    if (isLocationEnabled()) {
+        BackFetch backFetch = new BackFetch(this);
+        backFetch.execute();
+    }
+}
+    public void locControl() {
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+
+            public void onProviderEnabled(String provider) {
+                  if(itemsHashmap==null){
+                   // backFetch();
+                      Log.d("ab","backfetch");
+                   }
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+        };
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+}
 
     @Override
     public void onBackPressed() {
@@ -164,15 +220,15 @@ HashMap<Integer,List<Item>> itemsHashmap;
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        List<Item>itemList =new ArrayList<>();
-        if (id == R.id.nav_beverages) {
+        List<Item> itemList = new ArrayList<>();
+       /*  if (id == R.id.nav_beverages) {
 
             loadItems(0);
 
 
         }else if (id == R.id.nav_bread_bakery) {
             loadItems(1);
-        }/* else if (id == R.id.nav_slideshow) {
+        }else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
@@ -188,19 +244,18 @@ HashMap<Integer,List<Item>> itemsHashmap;
     }
 
 
-
     @Override
-    public void replaceFragment(Fragment fragment,Bundle bundle ) {
+    public void replaceFragment(Fragment fragment, Bundle bundle) {
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-         fragment.setArguments(bundle);
+        fragment.setArguments(bundle);
         transaction.replace(R.id.containerFrame, fragment);
-        transaction.addToBackStack(String.valueOf( bundle.get("title")));
-        Log.d("ab","replace 1"+bundle.get("title"));
+        transaction.addToBackStack(String.valueOf(bundle.get("title")));
+        Log.d("ab", "replace 1" + bundle.get("title"));
 
         transaction.commit();
     }
 
-    public void replace(Fragment fragment ) {
+    public void replace(Fragment fragment) {
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.containerFrame, fragment);
         transaction.addToBackStack(String.valueOf("current"));
@@ -209,46 +264,69 @@ HashMap<Integer,List<Item>> itemsHashmap;
 
 
     @Override
-    public void dataload( HashMap<Integer,List<Item>> itemsHash) {
-        itemsHashmap=itemsHash;
+    public void dataload(HashMap<Integer, List<Item>> itemsHash) {
+        itemsHashmap = itemsHash;
 
-        List<Item>itemList =new ArrayList<>();
+        List<Item> itemList = new ArrayList<>();
         Item item1;
-        for(int i=0;i<itemsHashmap.size();i++){
-            for(int j=0;j<itemsHashmap.get(i).size();j++){
-                item1= itemsHashmap.get(i).get(j);
+        for (int i = 0; i < itemsHashmap.size(); i++) {
+            for (int j = 0; j < itemsHashmap.get(i).size(); j++) {
+                item1 = itemsHashmap.get(i).get(j);
                 itemList.add(item1);
             }
         }
 
         ItemsFragment itemsFragment = (ItemsFragment) getSupportFragmentManager().findFragmentByTag("itemsfragment");
-       // Bundle bundle=new Bundle();
-       // bundle.putSerializable("itemlist", (Serializable) itemList);
-         itemsFragment.prepareItems(itemList);
+        itemsFragment.prepareItems(itemList);
     }
-    public void loadItems(int cat){
 
-        List<Item>itemList =new ArrayList<>();
+    public void loadItems(int cat) {
+
+        List<Item> itemList = new ArrayList<>();
         Item item1;
 
-        for(int j=0;j<itemsHashmap.get(cat).size();j++){
-            item1= itemsHashmap.get(cat).get(j);
+        for (int j = 0; j < itemsHashmap.get(cat).size(); j++) {
+            item1 = itemsHashmap.get(cat).get(j);
             itemList.add(item1);
         }
 
-       ItemsFragment itemsFragment = (ItemsFragment) getSupportFragmentManager().findFragmentByTag("itemsfragment");
+        ItemsFragment itemsFragment = (ItemsFragment) getSupportFragmentManager().findFragmentByTag("itemsfragment");
         itemsFragment.prepareItems(itemList);
     }
-//=====================================================================================
+
+    //=====================================================================================
+    public void startLocationUpdates() {
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL)
+                .setFastestInterval(FASTEST_INTERVAL);
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                mLocationRequest, this);
+
+}
+    private void stopLocationUpdates() {
+        Toast.makeText(this, "stoped", Toast.LENGTH_SHORT).show();
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, MainActivity.this);
+        if (locationManager != null) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.removeUpdates(this);
+        }
+    }
+
     synchronized void buildGoogleApiClient() {
-    // Log.d("ab","Exception"+LocationServices.API);
+
     try{
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API).build();
     }catch (Exception e){
-        Log.d("ab","Exception"+LocationServices.API);
     }
 }
     public void getLastKnownLocation() {
@@ -288,7 +366,6 @@ HashMap<Integer,List<Item>> itemsHashmap;
         }
     }
     private void writeLocation(Location loc) {
-        Log.d("ab","loc 1");
         sharedPreferences=this.getPreferences(context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("mlastLocation",""+loc);
@@ -300,38 +377,29 @@ HashMap<Integer,List<Item>> itemsHashmap;
             textWriteRead.writeToFile(String.valueOf(loc.getLatitude())+":"+String.valueOf(loc.getLongitude()),getApplication(),"mlastLocation.txt");
         }
     }
-    private String readFromFile(Context context) {
 
-        String ret = "";
 
-        try {
-            InputStream inputStream = context.openFileInput("config.txt");
 
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
 
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
+    public boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean is_GPS_Enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean is_Network_Enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (is_GPS_Enabled == false && is_Network_Enabled == false) {
+            LocationSettingDialog locationSettingDialog = new LocationSettingDialog(MainActivity.this);
+            locationSettingDialog.showSettingsAlert();
+            return false;
+        } else {
+            return true;
         }
-        catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        }
-
-        return ret;
     }
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        getLastKnownLocation();
+
+         startLocationUpdates();
+         getLastKnownLocation();
+
+
 
     }
 
@@ -362,7 +430,7 @@ HashMap<Integer,List<Item>> itemsHashmap;
 
     @Override
     public void onLocationChanged(Location location) {
-
+        writeLocation(location);
     }
  //====================================================================================
 }

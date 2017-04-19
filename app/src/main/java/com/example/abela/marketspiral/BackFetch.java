@@ -44,7 +44,7 @@ class  BackFetch extends AsyncTask<ArrayList<String>,Void,String> {
         HttpURLConnection connection = null;
         BufferedWriter writer = null;
         BufferedReader reader = null;
-        String SEARCH_URL = "http://192.168.43.137:80/db/pp.php/?";
+        String SEARCH_URL = "http://192.168.1.105:80/db/pp.php/?";
        // String Search="https://api.data.gov/nrel/alt-fuel-stations/v1/nearest.json?api_key=5cwCk6nhFAkPu9BU3EyxafUN5jqytIGvGD6R4kcO&location=Denver+CO";
         OutputStream outputStream;
         InputStream inputStream;
@@ -111,7 +111,7 @@ class  BackFetch extends AsyncTask<ArrayList<String>,Void,String> {
 
         double latCurrent;
         double lngCurrent;
-        Log.d("ab","result "+result);
+
         try {
 
             jsonRootObject = new JSONObject(result);
@@ -138,7 +138,7 @@ class  BackFetch extends AsyncTask<ArrayList<String>,Void,String> {
 
                    String current=textWriteRead.readFromFile(mContext, "mlastLocation.txt");
                     if(!current.isEmpty()) {
-                        Log.d("ab","current "+current);
+
                          String[] separeted=current.split(":");
 
                         latCurrent=Double.parseDouble(separeted[0]);
@@ -174,7 +174,6 @@ class  BackFetch extends AsyncTask<ArrayList<String>,Void,String> {
                     //Owner ownerr = new Owner(name, phone, email, country, speakes);
                 }
                 dataloader.dataload(itemsHashmap);
-
 
             }catch (JSONException j){
                 Log.d("ab","homes  "+j);
