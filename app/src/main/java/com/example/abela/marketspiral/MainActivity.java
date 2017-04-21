@@ -16,6 +16,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -74,17 +75,17 @@ public class MainActivity extends AppCompatActivity
     public static Location mLastLocation;
     public static Context context;
     public static SharedPreferences sharedPreferences;
+    BackFetch backFetch = new BackFetch(this);
     //-------------------------------------------------------
     HashMap<Integer, List<Item>> itemsHashmap;
     FragmentManager mFragmentManager;
     android.support.v4.app.FragmentTransaction mFragmentTransaction;
 
     private LocationRequest mLocationRequest;
-
     private long UPDATE_INTERVAL = 0;  /* 10 secs */
     private long FASTEST_INTERVAL = 0;
     LocationManager locationManager;
-
+    LocationSettingDialog locationSettingDialog;
     //---------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,31 +114,23 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        locControl();
+          //locControl();
         //backFetch();
 
         ItemsFragment itemsFragment = new ItemsFragment();
-
-        Bundle bundle = new Bundle();
-        // bundle.putSerializable("itemlist", (Serializable) itemList);
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.containerFrame, itemsFragment, "itemsfragment");
-
         transaction.addToBackStack("current");
         transaction.commit();
-
 //-----------------------------------------------------------------------------
         PlayServiceCheck playServiceCheck = new PlayServiceCheck(getApplicationContext());
         if (playServiceCheck.isPlayServiceOk()) {
-
             buildGoogleApiClient();
             mGoogleApiClient.connect();
-
         }
-        context = getApplicationContext();
-
-
 //-----------------------------------------------------------------------------
+        context = getApplicationContext();
+        locationSettingDialog = new LocationSettingDialog(MainActivity.this);
     }
 
 
@@ -150,8 +143,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void backFetch(){
-    if (isLocationEnabled()) {
-        BackFetch backFetch = new BackFetch(this);
+        if(mLastLocation==null){
+            getLastKnownLocation();
+        }
+          else if (isLocationEnabled()) {
         backFetch.execute();
     }
 }
@@ -165,9 +160,11 @@ public class MainActivity extends AppCompatActivity
             }
 
             public void onProviderEnabled(String provider) {
+
                   if(itemsHashmap==null){
-                   // backFetch();
-                      Log.d("ab","backfetch");
+                     // backFetch.execute();
+                     // backFetch.execute();
+                      Log.d("ab","enabled");
                    }
             }
 
@@ -243,6 +240,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        Log.d("ab","focus changed");
+
+        if(itemsHashmap==null){
+          init();
+
+        }
+        super.onWindowFocusChanged(hasFocus);
+    }
 
     @Override
     public void replaceFragment(Fragment fragment, Bundle bundle) {
@@ -254,14 +261,6 @@ public class MainActivity extends AppCompatActivity
 
         transaction.commit();
     }
-
-    public void replace(Fragment fragment) {
-        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.containerFrame, fragment);
-        transaction.addToBackStack(String.valueOf("current"));
-        transaction.commit();
-    }
-
 
     @Override
     public void dataload(HashMap<Integer, List<Item>> itemsHash) {
@@ -337,10 +336,8 @@ public class MainActivity extends AppCompatActivity
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         Location loc = null;
         if (mGoogleApiClient.isConnected()) {
-
                 loc = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            writeLocation(loc);
-//================================================================================
+                writeLocation(loc);
         }
 
         if (loc != null) {
@@ -378,34 +375,33 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-
+     public void init (){
+      if(isLocationEnabled()){
+        getLastKnownLocation();
+          backFetch.execute();
+      }
+     }
 
     public boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean is_GPS_Enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean is_Network_Enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         if (is_GPS_Enabled == false && is_Network_Enabled == false) {
-            LocationSettingDialog locationSettingDialog = new LocationSettingDialog(MainActivity.this);
-            locationSettingDialog.showSettingsAlert();
+
+            if(!locationSettingDialog.isDialogVisible()){
+            locationSettingDialog.showSettingsAlert();}
+
             return false;
         } else {
             return true;
         }
     }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
-         startLocationUpdates();
-         getLastKnownLocation();
-
-
-
     }
-
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
