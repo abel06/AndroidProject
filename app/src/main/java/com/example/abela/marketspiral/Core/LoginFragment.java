@@ -15,20 +15,38 @@ import java.util.HashMap;
 
 /**
  * Created by HaZe on 4/18/17.
- * This class represent the login frame within it's element.
+ * This class represent the login_activity frame within it's element.
  */
 
 public class LoginFragment extends Fragment {
 
-
-    //This is needed to prevent the fragment swap to work
-    private AppCompatActivity login;
+    //This is needed for fragment swap
+    private AppCompatActivity login_activity;
     private View view;
     private Button sign_up_button;
     private Button login_button;
 
+
+
+    public Button getSign_up_button() {
+        return sign_up_button;
+    }
+
+    public void setSign_up_button(Button sign_up_button) {
+        this.sign_up_button = sign_up_button;
+    }
+
+    public Button getLogin_button() {
+        return login_button;
+    }
+
+    public void setLogin_button(Button login_button) {
+        this.login_button = login_button;
+    }
+
+
     public LoginFragment(Login login) {
-        this.login = login;
+        this.login_activity = login;
     }
 
     @Nullable
@@ -38,7 +56,7 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    /**        This overhead is needed because it's caused on how fragment lifecycle works...    **/
+    /**        This overhead it's caused by how fragment's lifecycle works...    **/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -49,7 +67,7 @@ public class LoginFragment extends Fragment {
         sign_up_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((Login) login).swapToRegister();
+                ((Login) login_activity).swapToRegister();
             }
         });
 
@@ -57,7 +75,8 @@ public class LoginFragment extends Fragment {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((Login)login).login();
+                HashMap<String,String> data = collect_data();
+                ((Login) login_activity).login(data);
             }
         });
 
@@ -65,29 +84,11 @@ public class LoginFragment extends Fragment {
 
     }
 
-//    /**
-//     * Once the view have been inflated i collect buttons reference
-//     * */
-//        @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//    }
-
-    public Button getSign_up_button(){
-        return sign_up_button;
-    }
-
-    public Button getLogin_button(){
-        return login_button;
-    }
-
-
     /**
      * This functions works as before, collect data from the layout
      *  (this will be called from the Login activity)
      * **/
-    public HashMap<String,String> collect_data(){
+    private HashMap<String,String> collect_data(){
         HashMap<String,String> data = new HashMap<>();
         data.put("username",((TextInputEditText)view.findViewById(R.id.input_username)).getText().toString());
         data.put("password",((TextInputEditText)view.findViewById(R.id.input_password)).getText().toString());
