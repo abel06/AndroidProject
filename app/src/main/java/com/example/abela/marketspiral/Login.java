@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.abela.marketspiral.Core.LoginFragment;
 import com.example.abela.marketspiral.Core.RegisterFragment;
 import com.example.abela.marketspiral.interfaces.LoginResponse;
+import com.example.abela.marketspiral.interfaces.RegisterResponse;
+
+import java.util.HashMap;
 
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
-public class Login extends AppCompatActivity implements LoginResponse{
+public class Login extends AppCompatActivity implements LoginResponse, RegisterResponse {
     private LoginFragment login_fragment;
     private RegisterFragment register_fragment;
 
@@ -39,8 +42,8 @@ public class Login extends AppCompatActivity implements LoginResponse{
     /**
      * This code the login part
      * */
-    public void login() {
-//        new LoginBackFetch(this).execute(login_fragment.collect_data());
+    public void login(HashMap<String,String> data) {
+        new LoginBackFetch(this).execute(data);
     }
 
 
@@ -60,6 +63,24 @@ public class Login extends AppCompatActivity implements LoginResponse{
         }else{
             super.onBackPressed();
         }
+
+    }
+
+    public void register(HashMap<String, String> data) {
+
+        if(!data.isEmpty()) {
+            new RegisterBackFetch(this).execute(data);
+        }else{
+            //TODO error message
+        }
+
+    }
+
+
+    @Override
+    public void registerFinished() {
+
+        onBackPressed();
 
     }
 }
