@@ -41,19 +41,19 @@ public class LoginBackFetch extends AsyncTask<HashMap<String, String>, Void, Str
         String response ="";
         // String Search="https://api.data.gov/nrel/alt-fuel-stations/v1/nearest.json?api_key=5cwCk6nhFAkPu9BU3EyxafUN5jqytIGvGD6R4kcO&location=Denver+CO";
         InputStream inputStream = null;
-        //--------------------------------------------------------------------
+        //----------------------------------------ad    ---------------------------
 
         //-----------------------------------------------------------------------------------------------
         URL url = null;
         try {
             //Login php script location
-            url = new URL("http://192.168.43.137/db/login.php");
+            url = new URL("http://10.0.2.2/login.php");
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");      //Data sent via POST method
 
             connection.setDoOutput(true);
-            connection.setConnectTimeout(10000);
+            connection.setConnectTimeout(7000);
 
             OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
 
