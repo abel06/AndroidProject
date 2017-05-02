@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Created by HaZe on 4/11/17.
  */
 
-public class Functions {
+public final class Functions {
 
     public static String ConcatenateForServer(HashMap<String,String> data){
 
