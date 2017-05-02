@@ -1,4 +1,4 @@
-package com.example.abela.marketspiral.Core;
+package com.example.abela.marketspiral.GUI;
 
 import android.app.Fragment;
 import android.os.Bundle;

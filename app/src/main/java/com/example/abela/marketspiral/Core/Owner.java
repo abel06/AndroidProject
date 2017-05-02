@@ -1,4 +1,4 @@
-package com.example.abela.marketspiral;
+package com.example.abela.marketspiral.Core;
 
 /**
  * Created by Abela on 4/1/2017.
