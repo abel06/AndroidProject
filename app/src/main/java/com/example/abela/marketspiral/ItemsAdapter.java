@@ -2,8 +2,6 @@ package com.example.abela.marketspiral;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,8 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.abela.marketspiral.Core.Item;
+import com.example.abela.marketspiral.GUI.DescriptionFragment;
 
-import java.io.Serializable;
 import java.util.List;
 
 

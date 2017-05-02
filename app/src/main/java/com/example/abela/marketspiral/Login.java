@@ -3,16 +3,20 @@ package com.example.abela.marketspiral;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import com.example.abela.marketspiral.Core.LoginFragment;
-import com.example.abela.marketspiral.Core.RegisterFragment;
+
+import com.example.abela.marketspiral.Core.RemoteTask;
+import com.example.abela.marketspiral.GUI.LoginFragment;
+import com.example.abela.marketspiral.GUI.RegisterFragment;
+import com.example.abela.marketspiral.Utility.Actions;
 import com.example.abela.marketspiral.interfaces.LoginResponse;
 import com.example.abela.marketspiral.interfaces.RegisterResponse;
+import com.example.abela.marketspiral.interfaces.RemoteResponse;
 
 import java.util.HashMap;
 
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
-public class Login extends AppCompatActivity implements LoginResponse, RegisterResponse {
+public class Login extends AppCompatActivity implements RemoteResponse{
     private LoginFragment login_fragment;
     private RegisterFragment register_fragment;
 
@@ -26,24 +30,14 @@ public class Login extends AppCompatActivity implements LoginResponse, RegisterR
     }
 
 
-    @Override
-    public void loginFinished(String output) {
 
-        if( output.equals("VALIDO")) {
-            Intent main_activity = new Intent(this, MainActivity.class);
-            startActivity(main_activity);
-
-        }else {
-
-            System.out.println(output);
-        }
-    }
 
     /**
      * This code the login part
      * */
     public void login(HashMap<String,String> data) {
-        new LoginBackFetch(this).execute(data);
+
+        new RemoteTask(Actions.USER_LOGIN,data,this).execute();
     }
 
 
@@ -67,10 +61,10 @@ public class Login extends AppCompatActivity implements LoginResponse, RegisterR
     }
 
     public void register(HashMap<String, String> data) {
-
         if(!data.isEmpty()) {
-            new RegisterBackFetch(this).execute(data);
-        }else{
+            new RemoteTask(Actions.USER_REGISTRATION,data,this).execute();
+
+    }else{
             //TODO error message
         }
 
@@ -78,9 +72,34 @@ public class Login extends AppCompatActivity implements LoginResponse, RegisterR
 
 
     @Override
-    public void registerFinished() {
+    public void loginFinished(int value) {
+        if(value == 1) {
+            Intent main_activity = new Intent(this, MainActivity.class);
+            startActivity(main_activity);
 
-        onBackPressed();
+        }else {
+            System.out.println("Error during login");
+        }
+
+    }
+
+    @Override
+    public void registerFinished(int value) {
+        if(value == 1){
+            onBackPressed();
+        }else {
+            System.out.println("ERROR during register");
+        }
+
+    }
+
+    @Override
+    public void itemAdded(int id) {
+
+    }
+
+    @Override
+    public void itemRemoved(int id) {
 
     }
 }

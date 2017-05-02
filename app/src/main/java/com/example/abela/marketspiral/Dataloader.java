@@ -1,7 +1,6 @@
 package com.example.abela.marketspiral;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import com.example.abela.marketspiral.Core.Item;
 
 import java.util.HashMap;
 import java.util.List;
