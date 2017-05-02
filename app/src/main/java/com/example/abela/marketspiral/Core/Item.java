@@ -1,4 +1,4 @@
-package com.example.abela.marketspiral;
+package com.example.abela.marketspiral.Core;
 
 import java.util.Date;
 
@@ -8,6 +8,7 @@ import java.util.Date;
 
 
 public class Item {
+    private int ID;
     private String title;
     private String date;
     private double price;
@@ -19,7 +20,8 @@ public class Item {
     private int position;
     private double distance;
 
-    public Item() {
+    public Item(int ID) {
+        this.ID=ID;
     }
 
     public Item(int position,String title, double price, String thumbnail,String description,double lat,double lng,String date,double distance) {
