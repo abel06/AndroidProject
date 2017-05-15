@@ -1,7 +1,5 @@
 package com.example.abela.marketspiral.Core;
 
-import java.util.Date;
-
 /**
  * Created by Abela on 3/22/2017.
  */
@@ -18,13 +16,13 @@ public class Item {
     private double lat;
     private double lng;
     private int position;
-    private double distance;
+
 
     public Item(int ID) {
         this.ID=ID;
     }
 
-    public Item(int position,String title, double price, String thumbnail,String description,double lat,double lng,String date,double distance) {
+    public Item(int position, String title, double price, String thumbnail, String description, double lat, double lng, String date) {
        // this.name = name;
         this.position=position;
         this.title = title;
@@ -34,7 +32,7 @@ public class Item {
         this.description= description;
         this.lat= lat;
         this.lng = lng;
-        this.distance=distance;
+
 
     }
 
@@ -102,10 +100,5 @@ public class Item {
     public String getDate() {
         return date;
     }
-    public double getDistance() {
-        return distance;
-    }
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
+
 }
