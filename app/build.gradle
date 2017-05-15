@@ -5,10 +5,10 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.example.abela.marketspiral"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
         multiDexEnabled true
+        versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -25,24 +25,24 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    // RecyclerView
-
-    // CardView
-
-    // Glide
 
 
-    compile 'com.android.support:appcompat-v7:25.2.0'
+
+
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.android.support:appcompat-v7:25.0.2'
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:recyclerview-v7:25.2.0'
-    compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:support-v4:25.2.0'
     compile 'com.google.android.gms:play-services-maps:10.2.0'
     compile 'com.google.android.gms:play-services:10.2.1'
-    compile 'com.github.lzyzsd:circleprogress:1.2.1'
     compile 'junit:junit:4.12'
     compile 'com.akexorcist:googledirectionlibrary:1.0.4'
     compile 'com.google.android.gms:play-services-location:9.8.0'
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
+    testCompile 'junit:junit:4.12'
 }

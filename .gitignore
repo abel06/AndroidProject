@@ -7,3 +7,7 @@
 /build
 /captures
 .externalNativeBuild
+/TestActivity
+app/src/main/java/com/example/abela/marketspiral/TestActivity.java
+app/src/main/res/layout/activity_test.xml
+.idea/vcs.xml
