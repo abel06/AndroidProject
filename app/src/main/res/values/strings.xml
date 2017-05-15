@@ -40,4 +40,31 @@
                              inorder to provide offers around your location,location setting must be enabled</string>
     <string name="loc_dialog_positive_btn">Open Location Settings</string>
     <string name="loc_retrive_failed">Location retrive failed</string>
+
+    <string name="facebook_app_id">1440399922687952</string>
+    <string name="Bedroom">Bedroom</string>
+    <string name="map_list_header_txt">Location</string>
+    <string name="hint">Loc</string>
+    <string name="place_details">
+    <![CDATA[
+        <b>%1$s</b>
+        <br/>
+        <i>Place Id: %2$s</i>
+        <br/>
+        Address: %3$s
+        <br/>
+        Phone: %4$s
+        <br/>
+        Website: %5$s
+    ]]>
+    </string>
+    <string name="exchangeType">€</string>
+    <string name="no_min">No min</string>
+    <string name="no_max">No Max</string>
+    <string name="no_loc_obtained">Location not obtained</string>
+    <string name="select_loc_first">Please Select Location First</string>
+    <string name="title_activity_google_maps">Map</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="added_on">Added On</string>
 </resources>

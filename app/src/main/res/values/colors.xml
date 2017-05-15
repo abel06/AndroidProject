@@ -4,9 +4,9 @@
     <color name="viewBg">#48031c</color>
     <color name="album_title">#4c4c4c</color>
     <color name="colorPrimary_lite">#b4072e</color>
-    <color name="colorPrimary">#64041a</color>
-    <color name="colorPrimaryDark">#48031c</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#ca9a48</color>
+    <color name="colorPrimaryDark">#ae8643</color>
+    <color name="colorAccent">#CA9A48</color>
     <color name="appBackground">#ffffff</color>
 
     <color name="selected_tab">#001a1a</color>
@@ -32,8 +32,11 @@
     <color name="itemDetailWindowText">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="dark_grey">#484547</color>
+    <color name="dark_grey">#38484547</color>
     <color name="cardFooter">#afffffff</color>
     <color name="content_main">#a6a6a6</color>
     <color name="item_sub_description">#a6a6a6</color>
+    <color name="transparent">#00a6a6a6</color>
+    <color name="transparenrt_sub">#17a6a6a6</color>
+    <color name="black_lite">#555555</color>
 </resources>

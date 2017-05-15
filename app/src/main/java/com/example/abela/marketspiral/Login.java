@@ -1,95 +1,76 @@
 package com.example.abela.marketspiral;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.abela.marketspiral.Core.RemoteTask;
-import com.example.abela.marketspiral.GUI.LoginFragment;
-import com.example.abela.marketspiral.GUI.RegisterFragment;
 import com.example.abela.marketspiral.Utility.Actions;
-import com.example.abela.marketspiral.interfaces.LoginResponse;
-import com.example.abela.marketspiral.interfaces.RegisterResponse;
 import com.example.abela.marketspiral.interfaces.RemoteResponse;
 
 import java.util.HashMap;
 
-import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
-
-public class Login extends AppCompatActivity implements RemoteResponse{
-    private LoginFragment login_fragment;
-    private RegisterFragment register_fragment;
+public class Login extends AppCompatActivity implements RemoteResponse {
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
-        login_fragment = new LoginFragment(this);
-        register_fragment = new RegisterFragment(this);
-        getFragmentManager().beginTransaction().add(R.id.fragment_container,login_fragment).commit();
+        setContentView(R.layout.activity_login);
+
+        FloatingActionButton fabSignup= (FloatingActionButton) findViewById(R.id.fab_signup);
+        fabSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // Intent signUp =new Intent(Login.this,Registor.class);
+               // Login.this.startActivity(signUp);
+            }
+        });
+
+        final TextInputEditText input_usernameTv= (TextInputEditText) findViewById(R.id.input_username);
+        final TextInputEditText input_passwordTv= (TextInputEditText) findViewById(R.id.input_password);
+
+
+        Button loginBtn= (Button) findViewById(R.id.btn_login);
+            loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<String,String> data=new HashMap<String, String>();
+                    data.put(input_usernameTv.getText().toString(),input_passwordTv.getText().toString());
+                    login(data);
+                }
+            });
+    mContext.getApplicationContext();
     }
-
-
-
-
-    /**
-     * This code the login part
-     * */
     public void login(HashMap<String,String> data) {
 
-        new RemoteTask(Actions.USER_LOGIN,data,this).execute();
+        new RemoteTask(Actions.USER_LOGIN,data,this,mContext).execute();
     }
-
-
-    /**Thid method swaps between login frame to register frame*/
-    public void swapToRegister() {
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container,register_fragment).addToBackStack(NULL).commit();
-
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        System.out.println(getFragmentManager().getBackStackEntryCount());
-        if(getFragmentManager().getBackStackEntryCount() == 1) {
-            getFragmentManager().popBackStack();
-
-        }else{
-            super.onBackPressed();
-        }
-
-    }
-
-    public void register(HashMap<String, String> data) {
-        if(!data.isEmpty()) {
-            new RemoteTask(Actions.USER_REGISTRATION,data,this).execute();
-
-    }else{
-            //TODO error message
-        }
-
-    }
-
-
     @Override
     public void loginFinished(int value) {
-        if(value == 1) {
-            Intent main_activity = new Intent(this, MainActivity.class);
-            startActivity(main_activity);
-
-        }else {
-            System.out.println("Error during login");
-        }
 
     }
 
     @Override
     public void registerFinished(int value) {
-        if(value == 1){
-            onBackPressed();
-        }else {
-            System.out.println("ERROR during register");
-        }
+
+    }
+
+    @Override
+    public void searchFinished(int value, Object result) {
+
+    }
+
+    @Override
+    public void geocodeFinished(int id, Object o) {
 
     }
 
@@ -102,4 +83,10 @@ public class Login extends AppCompatActivity implements RemoteResponse{
     public void itemRemoved(int id) {
 
     }
+
+    @Override
+    public void searchItem(int id) {
+
+    }
+
 }

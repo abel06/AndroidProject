@@ -6,6 +6,6 @@ package com.example.abela.marketspiral.interfaces;
 
 public interface RegisterResponse {
 
-     void registerFinished ();
+     void registerFinished();
 
 }

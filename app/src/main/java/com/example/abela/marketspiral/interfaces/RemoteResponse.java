@@ -8,6 +8,11 @@ public interface RemoteResponse {
 
     void loginFinished(int value);
     void registerFinished(int value);
+    void searchFinished(int value, Object result);
+    void geocodeFinished(int id,Object result);
     void itemAdded(int id);
     void itemRemoved(int id);
+    void searchItem(int id);
+
+
 }
